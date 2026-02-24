@@ -112,7 +112,7 @@ const students = [
     name: "Ashish Chanchlani",
     branch: "ME",
     semester: 8,
-    cgpa: 7.5
+    cgpa: 8.5
   },
   {
     id: 16,
@@ -156,6 +156,16 @@ app.get("/students",(req,res)=>{
     res.status(200).json(students);
 });
 
+
+app.get("/students/looser",(req,res)=>{
+    let high = students[0];
+    for(let i = 1; i < students.length; i++){
+        if(students[i].cgpa < high.cgpa){
+            high = students[i];
+        }
+    }
+    res.status(200).json(high);
+});
 
 app.get("/students/topper",(req,res)=>{
     let high = students[0];
