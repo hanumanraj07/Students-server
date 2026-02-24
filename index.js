@@ -121,17 +121,30 @@ app.get("/students/count",(req,res)=>{
 
 app.get("/students/:id",(req,res)=>{
     const userId = Number(req.params.id);
-    const user = students.find(u => u.id === userId);
+    let user = null;
+
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].id === userId) {
+            user = students[i];
+            break;
+        }
+    }
     res.status(200).json(user);
 })
 
 
-app.get("/students/branch/:branchName",(req,res)=>{
+app.get("/students/branch/:branchName", (req, res) => {
     const userBranch = req.params.branchName.toLowerCase();
-    const user = students.filter(u => u.branch.toLowerCase() === userBranch);
+    let matchedStudents = [];
 
-    res.status(200).json(user);
-})
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].branch.toLowerCase() === userBranch) {
+            matchedStudents.push(students[i]);
+        }
+    }
+
+    res.status(200).json(matchedStudents);
+});
 
 
 
